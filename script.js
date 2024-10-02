@@ -11,6 +11,58 @@ class Password {
 
 let passwordContainer = [];
 
+function letterAleatory() {
+    const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
+    return  letras.charAt(Math.floor(Math.random() * letras.length))
+}
+
+function numberAleatory() {
+    return Math.floor(Math.random() * 9) + 1;
+}
+
+function passwordCreate (passwordName, passwordNumber){
+    let passwordGenerate = ""; 
+
+    const passType = prompt("Desea caracteres, numeros o ambas?");
+
+        switch (passType) {
+            case "caracteres":
+                for (let i = 0; i < passwordNumber; i++) {
+                    passwordGenerate += letterAleatory();
+                }
+                passwordContainer.push(new Password(passwordName, passwordGenerate));
+                alert("Tu contrseña de " + passwordName + " es " + passwordGenerate);
+                continueCreate = confirm("Desea crear alguna otra contraseña");
+                break;
+
+            case "numeros":
+                for (let i = 0; i < passwordNumber; i++) {
+                    passwordGenerate +=  numberAleatory();
+                }
+                passwordContainer.push(new Password(passwordName, passwordGenerate));
+                alert("Tu contrseña de " + passwordName + " es " + passwordGenerate);
+                continueCreate = confirm("Desea crear alguna otra contraseña");
+                break;
+
+            case "ambas":
+                for (let i = 0; i < passwordNumber; i++) {
+                    if (Math.random() > 0.5) {
+                        passwordGenerate +=  letterAleatory();
+                    } else {
+                        passwordGenerate +=  numberAleatory();
+                    }
+                }
+                passwordContainer.push(new Password(passwordName, passwordGenerate));
+                alert("Tu contrseña de " + passwordName + " es " + passwordGenerate);
+                continueCreate = confirm("Desea crear alguna otra contraseña");
+                break;
+
+            default:
+                alert("Seleciona un tipo de contraseña valido");
+                break;
+        }
+}
+
 do {
     let passName = prompt("Seleccione un nombre para su contraseña");
     const passNumber = Number(
@@ -28,65 +80,31 @@ do {
     } else if (passName === "") {
         alert("Ingresa algun nombre");
     } else {
-        const passType = prompt("Desea caracteres, numeros o ambas?");
-
-        function letterAleatory() {
-            const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
-            return (passwordGenerate += letras.charAt(
-                Math.floor(Math.random() * letras.length)
-            ));
-        }
-
-        function numberAleatory() {
-            return (passwordGenerate += Math.floor(Math.random() * 9) + 1);
-        }
-
-        let passwordGenerate = "";
-
-        switch (passType) {
-            case "caracteres":
-                for (let i = 0; i < passNumber; i++) {
-                    letterAleatory();
-                }
-                passwordContainer.push(new Password(passName, passwordGenerate));
-                alert("Tu contrseña de " + passName + " es " + passwordGenerate);
-                continueCreate = confirm("Desea crear alguna otra contraseña");
-                break;
-
-            case "numeros":
-                for (let i = 0; i < passNumber; i++) {
-                    numberAleatory();
-                }
-                passwordContainer.push(new Password(passName, passwordGenerate));
-                alert("Tu contrseña de " + passName + " es " + passwordGenerate);
-                continueCreate = confirm("Desea crear alguna otra contraseña");
-                break;
-
-            case "ambas":
-                for (let i = 0; i < passNumber; i++) {
-                    if (Math.random() > 0.5) {
-                        letterAleatory();
-                    } else {
-                        numberAleatory();
-                    }
-                }
-                passwordContainer.push(new Password(passName, passwordGenerate));
-                alert("Tu contrseña de " + passName + " es " + passwordGenerate);
-                continueCreate = confirm("Desea crear alguna otra contraseña");
-                break;
-
-            default:
-                alert("Seleciona un tipo de contraseña valido");
-                break;
-        }
+        passwordCreate(passName,passNumber)
     }
 } while (continueCreate);
 
 let continueDelete = false;
 
-continueDelete = confirm("desea eliminar alguna contraseña");
+function deletePassContainer(deleteID) {
+    const passIndex = passwordContainer.findIndex(
+        (pass) => pass.id === deleteID
+    );
+
+    if (passIndex !== -1) {
+                passwordContainer.splice(passIndex, 1);
+                alert("Contraseña eliminada correctamente")
+    } else {
+        alert("Selecione un ID valido");
+    }
+}
 
 do {
+
+    continueDelete = confirm("desea eliminar alguna contraseña");
+
+    if(!continueDelete) break;
+
     const passwordList = passwordContainer.map((pass) => {
         return "PASS NAME: " + pass.name + " | PASS ID: " + pass.id;
     });
@@ -98,29 +116,12 @@ do {
         )
     );
 
-    function deletePassContainer(deleteID) {
-        const passIndex = passwordContainer.findIndex(
-            (pass) => pass.id === deleteID
-        );
-
-        if (passIndex !== -1) {
-            passwordContainer.forEach((pass, index) => {
-                if (pass.id === deleteID) {
-                    passwordContainer.splice(index, 1);
-                }
-            });
-        } else {
-            alert("Selecione un ID valido");
-        }
-    }
-
-    if (isNaN(passwordToDelete)) {
+    if (isNaN(passwordToDelete) || passwordToDelete === "") {
         alert("Seleccione un ID valido");
-    } else if (passwordToDelete === "") {
-        alert("Debe completar el campo");
-    } else {
+    }else {
+
         deletePassContainer(passwordToDelete);
 
-        continueDelete = confirm("Desea seguir eliminando alguna contraseña mas?");
     }
+    
 } while (continueDelete);

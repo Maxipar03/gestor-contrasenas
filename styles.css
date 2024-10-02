@@ -1,0 +1,29 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: "Kanit", sans-serif;
+    color: white;
+}
+
+header{
+    height: 100%;
+    background-color: black;
+}
+
+header h1{
+    text-align: center;
+    font-size: 3rem;
+}
+
+.passBox{
+background-color: black;
+margin: 30px;
+padding: 10px;
+border-radius: 10px;
+}
+
+.passBox h3{
+    margin-top: 20px;
+    font-weight: 100;
+}
