@@ -7,6 +7,18 @@ class Password {
         this.password = pass;
         this.id = idCounter++;
     }
+
+    passwordStrong (){
+        const passwordLength = this.password.length
+
+        if(passwordLength < 9){
+            return "Debil"
+        } else if (passwordLength >= 9 && passwordLength < 14){
+            return "Moderada"
+        } else{
+            return "Fuerte"
+        }
+    }
 }
 
 let passwordContainer = [];
