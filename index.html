@@ -13,10 +13,30 @@
     <header>
         <h1>Gestor de contraseñas</h1>
     </header>
-        <div class="passBox">
-            <h2>pepito1</h2>
-            <h3><strong id="passStrong">Contraseña:</strong> pedro15</h3>
+    <form class="passwordGenerator"  id="passwordForm">
+        <h1>Genera tu contraseña:</h1>
+        <div class="passInputContainer">
+            <label for="passName">Nombre de la contraseña</label>
+            <input placeholder="Google" id="passName" name="passName" type="text" required>
         </div>
+        <div class="passInputContainer"> 
+            <label for="passType">Tipo de contraseña</label>
+            <select id="passType">
+                <option value="" selected disabled>Selecione algun tipo de contraseña</option>
+                <option value="ambas">Ambas</option>
+                <option value="caracteres">Caracteres</option>
+                <option value="numeros">Numeros</option>
+            </select>
+        </div>
+        <div class="passInputContainer">
+            <label for="passLength">Cantidad de caracteres (max: 20)</label>
+            <input id="passLength" name="passLength" placeholder="14" type="number" max="20" required>
+        </div>
+        <button type="submit">Crear Contraseña</button>
+    </form>
+    <div id="passContainer">
+
+    </div>
         <script src="./script.js"></script>
 </body>
 </html>

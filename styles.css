@@ -3,7 +3,7 @@
     margin: 0px;
     box-sizing: border-box;
     font-family: "Kanit", sans-serif;
-    color: white;
+    color: black;
 }
 
 header{
@@ -14,16 +14,72 @@ header{
 header h1{
     text-align: center;
     font-size: 3rem;
+    color: white;
 }
 
 .passBox{
-background-color: black;
-margin: 30px;
-padding: 10px;
-border-radius: 10px;
+    background-color: black;
+    margin: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    width: min-content;
+    min-width: 290px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+#passContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.passBox h1{
+    color: white;
+}
+
+.passBox button{
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    height: 45px;
+    border: 0px;
+    font-size: 1.3em;
+    border-radius: 5px;
+    background-color: wheat;
+}
+
+.passAtribute p{
+    color: white;
+}
+
+.passBox strong{
+    color: wheat;
 }
 
 .passBox h3{
     margin-top: 20px;
     font-weight: 100;
 }
+
+.passwordGenerator{
+    padding: 30px;
+}
+
+.passwordGenerator button{
+    margin-top: 20px;
+    width: 100%;
+    cursor: pointer;
+    height: 45px;
+    border: 0px;
+    font-size: 1.3em;
+    border-radius: 5px;
+    background-color: wheat;
+}
+
+.passInputContainer{
+    display: flex;
+    flex-direction: column;
+}
+

@@ -1,139 +1,148 @@
-let continueCreate = false;
-let idCounter = 1;
+let idCounter = parseInt(localStorage.getItem("idCounter")) || 0;
 
 class Password {
     constructor(name, pass) {
         this.name = name.toLowerCase();
         this.password = pass;
         this.id = idCounter++;
+        this.strength = this.passwordStrong();
+        localStorage.setItem("idCounter", idCounter);
     }
 
-    passwordStrong (){
-        const passwordLength = this.password.length
+    passwordStrong() {
+        const passwordLength = this.password.length;
 
-        if(passwordLength < 9){
-            return "Debil"
-        } else if (passwordLength >= 9 && passwordLength < 14){
-            return "Moderada"
-        } else{
-            return "Fuerte"
+        if (passwordLength < 9) {
+            return "Debil";
+        } else if (passwordLength >= 9 && passwordLength < 14) {
+            return "Moderada";
+        } else {
+            return "Fuerte";
         }
     }
 }
 
-let passwordContainer = [];
-
 function letterAleatory() {
     const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
-    return  letras.charAt(Math.floor(Math.random() * letras.length))
+    return letras.charAt(Math.floor(Math.random() * letras.length));
 }
 
 function numberAleatory() {
     return Math.floor(Math.random() * 9) + 1;
 }
 
-function passwordCreate (passwordName, passwordNumber){
-    let passwordGenerate = ""; 
+function passwordCreate(passwordNumber, passType) {
+    let passwordGenerate = "";
 
-    const passType = prompt("Desea caracteres, numeros o ambas?");
+    switch (passType) {
+        case "caracteres":
+            for (let i = 0; i < passwordNumber; i++) {
+                passwordGenerate += letterAleatory();
+            }
+            return passwordGenerate;
 
-        switch (passType) {
-            case "caracteres":
-                for (let i = 0; i < passwordNumber; i++) {
+        case "numeros":
+            for (let i = 0; i < passwordNumber; i++) {
+                passwordGenerate += numberAleatory();
+            }
+            return passwordGenerate;
+
+        case "ambas":
+            for (let i = 0; i < passwordNumber; i++) {
+                if (Math.random() > 0.5) {
                     passwordGenerate += letterAleatory();
+                } else {
+                    passwordGenerate += numberAleatory();
                 }
-                passwordContainer.push(new Password(passwordName, passwordGenerate));
-                alert("Tu contrseña de " + passwordName + " es " + passwordGenerate);
-                continueCreate = confirm("Desea crear alguna otra contraseña");
-                break;
+            }
+            return passwordGenerate;
 
-            case "numeros":
-                for (let i = 0; i < passwordNumber; i++) {
-                    passwordGenerate +=  numberAleatory();
-                }
-                passwordContainer.push(new Password(passwordName, passwordGenerate));
-                alert("Tu contrseña de " + passwordName + " es " + passwordGenerate);
-                continueCreate = confirm("Desea crear alguna otra contraseña");
-                break;
-
-            case "ambas":
-                for (let i = 0; i < passwordNumber; i++) {
-                    if (Math.random() > 0.5) {
-                        passwordGenerate +=  letterAleatory();
-                    } else {
-                        passwordGenerate +=  numberAleatory();
-                    }
-                }
-                passwordContainer.push(new Password(passwordName, passwordGenerate));
-                alert("Tu contrseña de " + passwordName + " es " + passwordGenerate);
-                continueCreate = confirm("Desea crear alguna otra contraseña");
-                break;
-
-            default:
-                alert("Seleciona un tipo de contraseña valido");
-                break;
-        }
-}
-
-do {
-    let passName = prompt("Seleccione un nombre para su contraseña");
-    const passNumber = Number(
-        prompt("Ingrese el numero de caracteres que desee tener su contraseña")
-    );
-
-    let passNameRepeat = passwordContainer.find((pass) => pass.name === passName);
-
-    if (passNumber < 5 || passNumber > 20) {
-        alert("La contraseña debe tener entre 5 y 20 carateres");
-    } else if (isNaN(passNumber)) {
-        alert("Seleciona un numero valido");
-    } else if (passNameRepeat) {
-        alert("El nombre creado ya esta siendo utilizado");
-    } else if (passName === "") {
-        alert("Ingresa algun nombre");
-    } else {
-        passwordCreate(passName,passNumber)
-    }
-} while (continueCreate);
-
-let continueDelete = false;
-
-function deletePassContainer(deleteID) {
-    const passIndex = passwordContainer.findIndex(
-        (pass) => pass.id === deleteID
-    );
-
-    if (passIndex !== -1) {
-                passwordContainer.splice(passIndex, 1);
-                alert("Contraseña eliminada correctamente")
-    } else {
-        alert("Selecione un ID valido");
+        default:
+            alert("Seleciona un tipo de contraseña valido");
+            break;
     }
 }
 
-do {
+function savePassLocal(passwordSave) {
+    let passwords = JSON.parse(localStorage.getItem("passwords")) || [];
+    passwords = [...passwords, passwordSave];
+    localStorage.setItem("passwords", JSON.stringify(passwords));
+}
 
-    continueDelete = confirm("desea eliminar alguna contraseña");
+function PassSaved (){
+    const passwordStorage = JSON.parse(localStorage.getItem("passwords"))
+    return passwordStorage
+}
 
-    if(!continueDelete) break;
+function getPassSaved (){
+    if(localStorage.getItem("passwords")){
+        const passwordStoraged = PassSaved()
 
-    const passwordList = passwordContainer.map((pass) => {
-        return "PASS NAME: " + pass.name + " | PASS ID: " + pass.id;
+        passwordStoraged.forEach(pass => {
+            paintPass(pass)
+        });
+    }
+}
+
+function deletePassword(id) {
+    let storedPasswords = JSON.parse(localStorage.getItem("passwords")) || []; 
+    storedPasswords = storedPasswords.filter(password => password.id !== id);
+    localStorage.setItem("passwords", JSON.stringify(storedPasswords)); 
+    location.reload(); 
+}
+
+function addDeleteListeners() {
+    document.querySelectorAll(".buttonDelete").forEach(button => {
+        button.addEventListener("click", function() {
+            const passwordId = parseInt(this.id);
+            deletePassword(passwordId)
+        });
+    });
+}
+
+function paintPass(password) {
+    const passContainer = document.getElementById("passContainer");
+
+    const div = document.createElement("div");
+
+    div.className = "passBox"
+
+    div.innerHTML += `
+
+        <h1>${password.name}</h1>
+        <div class="passAtribute">
+        <p><strong>Fuerza</strong>: ${password.strength}</p>
+        </div>
+        <div class="passAtribute">
+        <p><strong>Contraseña</strong>: ${password.password}</p>
+        </div>
+        <button href="#" class="buttonDelete" id="${password.id}" name="delete">Delete</button>
+  `;
+
+    passContainer.appendChild(div)
+
+    addDeleteListeners();
+}
+
+document
+    .getElementById("passwordForm")
+    .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("passName").value;
+        const pass = document.getElementById("passType").value;
+        const length = document.getElementById("passLength").value;
+
+        const generatedPassword = passwordCreate(length, pass);
+
+        const newPassword = new Password(name, generatedPassword);
+
+        savePassLocal(newPassword);
+
+        paintPass(newPassword)
+
+        console.log("Contraseña Generada:", newPassword.password);
+        console.log("Fuerza de la contraseña:", newPassword.passwordStrong());
     });
 
-    let passwordToDelete = Number(
-        prompt(
-            "Que contrasñea desea eliminar (selecciona su id correspondiente)\n" +
-            passwordList.join("\n")
-        )
-    );
-
-    if (isNaN(passwordToDelete) || passwordToDelete === "") {
-        alert("Seleccione un ID valido");
-    }else {
-
-        deletePassContainer(passwordToDelete);
-
-    }
-    
-} while (continueDelete);
+document.addEventListener("DOMContentLoaded", getPassSaved);
