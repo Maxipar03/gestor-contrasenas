@@ -1,5 +1,21 @@
 let idCounter = parseInt(localStorage.getItem("idCounter")) || 0;
 
+async function catFact () {
+    try{
+        const response = await fetch("https://catfact.ninja/fact")
+        const data = await response.json()
+    
+        const h1 = document.createElement("h1");
+        h1.innerHTML = data.fact
+    
+        document.body.appendChild(h1);
+    } catch(error){
+        console.error("error :", error)
+    }
+} 
+
+catFact()
+
 class Password {
     constructor(name, pass) {
         this.name = name.toLowerCase();
