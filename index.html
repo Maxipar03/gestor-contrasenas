@@ -15,22 +15,28 @@
     </header>
     <form class="passwordGenerator"  id="passwordForm">
         <h1>Genera tu contraseña:</h1>
-        <div class="passInputContainer">
-            <label for="passName">Nombre de la contraseña</label>
-            <input placeholder="Google" id="passName" name="passName" type="text" required>
-        </div>
-        <div class="passInputContainer"> 
-            <label for="passType">Tipo de contraseña</label>
-            <select id="passType">
-                <option value="" selected disabled>Selecione algun tipo de contraseña</option>
-                <option value="ambas">Ambas</option>
-                <option value="caracteres">Caracteres</option>
-                <option value="numeros">Numeros</option>
-            </select>
-        </div>
-        <div class="passInputContainer">
-            <label for="passLength">Cantidad de caracteres (max: 20)</label>
-            <input id="passLength" name="passLength" placeholder="14" type="number" max="20" required>
+        <div class="passInputBox">
+            <div class="passInputContainer">
+                <label for="passName">Nombre de la contraseña</label>
+                <input placeholder="Google" id="passName" name="passName" type="text" required>
+            </div>
+            <div class="passInputContainer"> 
+                <label for="passType">Tipo de contraseña</label>
+                <select id="passType">
+                    <option value="" selected disabled>Selecione algun tipo de contraseña</option>
+                    <option value="ambas">Ambas</option>
+                    <option value="caracteres">Caracteres</option>
+                    <option value="numeros">Numeros</option>
+                </select>
+            </div>
+            <div class="passInputContainer">
+                <label for="passLength">Cantidad de caracteres (max: 20)</label>
+                <input id="passLength" name="passLength" placeholder="14" type="number" max="20" required>
+            </div>
+            <div class="passInputContainer">
+                <label for="passURL">URL</label>
+                <input id="passURL" name="passURL" placeholder="google.com" type="text" required>
+            </div>
         </div>
         <button type="submit">Crear Contraseña</button>
     </form>

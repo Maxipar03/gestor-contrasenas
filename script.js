@@ -1,26 +1,25 @@
 let idCounter = parseInt(localStorage.getItem("idCounter")) || 0;
 
-async function catFact () {
-    try{
+async function catFact() {
+    try {
         const response = await fetch("https://catfact.ninja/fact")
         const data = await response.json()
-    
+
         const h1 = document.createElement("h1");
         h1.innerHTML = data.fact
-    
+
         document.body.appendChild(h1);
-    } catch(error){
+    } catch (error) {
         console.error("error :", error)
     }
-} 
-
-catFact()
+}
 
 class Password {
-    constructor(name, pass) {
+    constructor(name, pass, url) {
         this.name = name.toLowerCase();
         this.password = pass;
         this.id = idCounter++;
+        this.url = url
         this.strength = this.passwordStrong();
         localStorage.setItem("idCounter", idCounter);
     }
@@ -85,13 +84,13 @@ function savePassLocal(passwordSave) {
     localStorage.setItem("passwords", JSON.stringify(passwords));
 }
 
-function PassSaved (){
+function PassSaved() {
     const passwordStorage = JSON.parse(localStorage.getItem("passwords"))
     return passwordStorage
 }
 
-function getPassSaved (){
-    if(localStorage.getItem("passwords")){
+function getPassSaved() {
+    if (localStorage.getItem("passwords")) {
         const passwordStoraged = PassSaved()
 
         passwordStoraged.forEach(pass => {
@@ -101,15 +100,15 @@ function getPassSaved (){
 }
 
 function deletePassword(id) {
-    let storedPasswords = JSON.parse(localStorage.getItem("passwords")) || []; 
+    let storedPasswords = JSON.parse(localStorage.getItem("passwords")) || [];
     storedPasswords = storedPasswords.filter(password => password.id !== id);
-    localStorage.setItem("passwords", JSON.stringify(storedPasswords)); 
-    location.reload(); 
+    localStorage.setItem("passwords", JSON.stringify(storedPasswords));
+    location.reload();
 }
 
 function addDeleteListeners() {
     document.querySelectorAll(".buttonDelete").forEach(button => {
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
             const passwordId = parseInt(this.id);
             deletePassword(passwordId)
         });
@@ -125,6 +124,9 @@ function paintPass(password) {
 
     div.innerHTML += `
 
+        <div class="logoContainer">
+            <img src="https://logo.clearbit.com/${password.url}" alt="${password.name} logo" onerror="this.style.display='none';">
+        </div>
         <h1>${password.name}</h1>
         <div class="passAtribute">
         <p><strong>Fuerza</strong>: ${password.strength}</p>
@@ -140,6 +142,8 @@ function paintPass(password) {
     addDeleteListeners();
 }
 
+catFact()
+
 document
     .getElementById("passwordForm")
     .addEventListener("submit", function (event) {
@@ -148,10 +152,11 @@ document
         const name = document.getElementById("passName").value;
         const pass = document.getElementById("passType").value;
         const length = document.getElementById("passLength").value;
+        const url = document.getElementById("passURL").value;
 
         const generatedPassword = passwordCreate(length, pass);
 
-        const newPassword = new Password(name, generatedPassword);
+        const newPassword = new Password(name, generatedPassword, url);
 
         savePassLocal(newPassword);
 

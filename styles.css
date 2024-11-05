@@ -78,8 +78,28 @@ header h1{
     background-color: wheat;
 }
 
+.logoContainer img{
+    width: 125px;
+}
+
 .passInputContainer{
     display: flex;
     flex-direction: column;
 }
 
+.passInputContainer input,select{
+    height: 35px;
+    font-size: 1em;
+    padding: 0px 10px;
+}
+
+@media (min-width: 1020px) {
+    .passInputBox{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .passInputContainer{
+        width: 24%;
+    }
+}
