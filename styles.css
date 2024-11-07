@@ -17,22 +17,32 @@ header h1{
     color: white;
 }
 
+body{
+    background-color: #252424;
+}
+
 .passBox{
-    background-color: black;
-    margin: 20px;
-    padding: 15px;
-    border-radius: 10px;
     width: min-content;
-    min-width: 290px;
     display: flex;
     gap: 10px;
+    width: 100%;
     flex-direction: column;
+}
+
+.passBoxCard{
+    width: 100%;
+    background-image: url("./assets/pngtree-vibrant-yellow-abstract-background-with-textured-white-lines-on-isolated-patterned-png-image_12219818.png");
+    border: 1px solid rgba(8, 8, 8, 0.3);
+    padding: 30px;
+    background-size: cover;
 }
 
 #passContainer{
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 10px;
 }
 
 .passBox h1{
@@ -50,8 +60,13 @@ header h1{
     background-color: wheat;
 }
 
+.passAtributeContainer{
+    width: 100%;
+}
+
 .passAtribute p{
     color: white;
+    font-size: 1.3em;
 }
 
 .passBox strong{
@@ -64,7 +79,11 @@ header h1{
 }
 
 .passwordGenerator{
-    padding: 30px;
+    margin: 10px;
+    padding: 30px 10px;
+    background: rgba(255, 255, 255, 0.31);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-bottom: 10px solid rgba(255, 255, 255, 0.3)
 }
 
 .passwordGenerator button{
@@ -80,6 +99,8 @@ header h1{
 
 .logoContainer img{
     width: 125px;
+    height: 100%;
+    object-fit: contain;
 }
 
 .passInputContainer{
@@ -93,7 +114,23 @@ header h1{
     padding: 0px 10px;
 }
 
+@media (min-width: 760px) {
+    .passBox{
+        width: 47.9%;
+    }
+}
+
 @media (min-width: 1020px) {
+
+    .passwordGenerator{
+        margin: 30px 10%;
+        padding: 30px;
+    }
+
+    #passContainer{
+        padding: 30px 10%;
+    }
+
     .passInputBox{
         display: flex;
         justify-content: space-between;
@@ -101,5 +138,11 @@ header h1{
 
     .passInputContainer{
         width: 24%;
+    }
+
+    .passBox{
+        display: flex;
+        flex-direction: row;
+        width: 31%;
     }
 }

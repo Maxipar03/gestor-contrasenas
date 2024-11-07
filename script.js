@@ -115,6 +115,33 @@ function addDeleteListeners() {
     });
 }
 
+function addCopyListeners(password) {
+    document.getElementById(`copy-${password.id}`).addEventListener('click', () => {
+
+        navigator.clipboard.writeText(password.password).then(() => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
+            Toast.fire({
+                icon: "success",
+                title: "Contraseña copiada"
+            });
+
+        }).catch(err => {
+            console.error("Error al copiar la contraseña: ", err);
+        });
+    });
+}
+
 function paintPass(password) {
     const passContainer = document.getElementById("passContainer");
 
@@ -123,23 +150,30 @@ function paintPass(password) {
     div.className = "passBox"
 
     div.innerHTML += `
-
+    <div class="passBoxCard">
         <div class="logoContainer">
             <img src="https://logo.clearbit.com/${password.url}" alt="${password.name} logo" onerror="this.style.display='none';">
         </div>
-        <h1>${password.name}</h1>
-        <div class="passAtribute">
-        <p><strong>Fuerza</strong>: ${password.strength}</p>
-        </div>
-        <div class="passAtribute">
-        <p><strong>Contraseña</strong>: ${password.password}</p>
-        </div>
-        <button href="#" class="buttonDelete" id="${password.id}" name="delete">Delete</button>
+        <div class="passAtributeContainer">
+            <h1>${password.name}</h1>
+            <div class="passAtribute">
+                <p><strong>Fuerza</strong>: ${password.strength}</p>
+            </div>
+            <div class="passAtribute">
+                <p><strong>Contraseña</strong>: ${password.password}</p>
+            </div>
+            <button href="#" class="buttonDelete" id="${password.id}" name="delete">Delete</button>
+            <button type="button" class="buttonCopy" id="copy-${password.id}" name="delete">Copiar Contraseña</button>
+            </div>
+    </div>
   `;
 
     passContainer.appendChild(div)
 
+    addCopyListeners(password);
+
     addDeleteListeners();
+
 }
 
 catFact()
