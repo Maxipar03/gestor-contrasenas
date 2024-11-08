@@ -14,6 +14,17 @@ async function catFact() {
     }
 }
 
+async function getWeather() {
+    try {
+        const response = await fetch("https://api.openweathermap.org/data/2.5/weather?q=Buenos Aires&appid=58f7caf3dd35cf68f2e3dc0be4234ce1&units=metric&lang=es")
+        const data = await response.json()
+
+        console.log(data)
+    } catch (error) {
+        console.error("error :", error)
+    }
+}
+
 class Password {
     constructor(name, pass, url) {
         this.name = name.toLowerCase();
@@ -115,6 +126,14 @@ function addDeleteListeners() {
     });
 }
 
+function addClosePopUpListener(){
+    document.getElementById("formContainer").style.display = "none";
+}
+
+function addOpenPopUpListener(){
+    document.getElementById("formContainer").style.display = "flex";
+}
+
 function addCopyListeners(password) {
     document.getElementById(`copy-${password.id}`).addEventListener('click', () => {
 
@@ -178,6 +197,19 @@ function paintPass(password) {
 
 catFact()
 
+getWeather()
+
+document.getElementById("passBoxCreate")
+.addEventListener("click", function(){
+    addOpenPopUpListener()
+})
+
+document
+    .getElementById("closeIcon")
+    .addEventListener("click", function (){
+        addClosePopUpListener()
+    })
+
 document
     .getElementById("passwordForm")
     .addEventListener("submit", function (event) {
@@ -194,7 +226,9 @@ document
 
         savePassLocal(newPassword);
 
-        paintPass(newPassword)
+        paintPass(newPassword);
+
+        addClosePopUpListener();
 
         console.log("Contraseña Generada:", newPassword.password);
         console.log("Fuerza de la contraseña:", newPassword.passwordStrong());

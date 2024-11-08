@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
@@ -6,22 +6,30 @@
     color: black;
 }
 
-header{
-    height: 100%;
+header {
+    height: 80px;
     background-color: black;
+    display: flex;
+    align-items: center;
+    padding: 10px;
 }
 
-header h1{
+header img {
+    width: 40px;
+    margin-right: 15px;
+}
+
+header h1 {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2.3rem;
     color: white;
 }
 
-body{
+body {
     background-color: #252424;
 }
 
-.passBox{
+.passBox {
     width: min-content;
     display: flex;
     gap: 10px;
@@ -29,7 +37,7 @@ body{
     flex-direction: column;
 }
 
-.passBoxCard{
+.passBoxCard {
     width: 100%;
     background-image: url("./assets/pngtree-vibrant-yellow-abstract-background-with-textured-white-lines-on-isolated-patterned-png-image_12219818.png");
     border: 1px solid rgba(8, 8, 8, 0.3);
@@ -37,19 +45,43 @@ body{
     background-size: cover;
 }
 
-#passContainer{
+.passBoxCreate {
+    width: 100%;
+    background: rgba(175, 175, 175, 0.52);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.4px);
+    -webkit-backdrop-filter: blur(10.4px);
+    border: 1px solid rgba(175, 175, 175, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    min-height: 250px;
+}
+
+.passBoxCreate i {
+    font-size: 4em;
+    color: white;
+}
+
+.passBoxCreate h2 {
+    color: white;
+}
+
+#passContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 30px;
     padding: 10px;
 }
 
-.passBox h1{
+.passBox h1 {
     color: white;
 }
 
-.passBox button{
+.passBox button {
     cursor: pointer;
     margin-top: 20px;
     width: 100%;
@@ -60,33 +92,48 @@ body{
     background-color: wheat;
 }
 
-.passAtributeContainer{
+.passAtributeContainer {
     width: 100%;
 }
 
-.passAtribute p{
+.passAtribute p {
     color: white;
     font-size: 1.3em;
 }
 
-.passBox strong{
+.passBox strong {
     color: wheat;
 }
 
-.passBox h3{
+.passBox h3 {
     margin-top: 20px;
     font-weight: 100;
 }
 
-.passwordGenerator{
-    margin: 10px;
-    padding: 30px 10px;
-    background: rgba(255, 255, 255, 0.31);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    border-bottom: 10px solid rgba(255, 255, 255, 0.3)
+.formContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }
 
-.passwordGenerator button{
+.passwordGenerator {
+    margin: 10px;
+    padding: 30px 10px;
+    background: rgba(255, 255, 255, 0.925);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-bottom: 10px solid rgba(255, 255, 255, 0.3);
+}
+
+.passwordGenerator button {
     margin-top: 20px;
     width: 100%;
     cursor: pointer;
@@ -97,50 +144,57 @@ body{
     background-color: wheat;
 }
 
-.logoContainer img{
+.logoContainer img {
     width: 125px;
     height: 100%;
     object-fit: contain;
 }
 
-.passInputContainer{
+.passInputContainer {
     display: flex;
     flex-direction: column;
 }
 
-.passInputContainer input,select{
+.passInputContainer input,
+select {
     height: 35px;
     font-size: 1em;
     padding: 0px 10px;
 }
 
 @media (min-width: 760px) {
-    .passBox{
+    .passBox {
         width: 47.9%;
+    }
+
+    .passBoxCreate {
+        min-height: 350px;
+        height: 100%;
+        min-width: 274px;
     }
 }
 
-@media (min-width: 1020px) {
+@media (min-width: 1100px) {
 
-    .passwordGenerator{
+    header {
+        padding: 0px 10%;
+    }
+
+    .passwordGenerator {
         margin: 30px 10%;
         padding: 30px;
     }
 
-    #passContainer{
+    #passContainer {
         padding: 30px 10%;
     }
 
-    .passInputBox{
+    .passInputBox {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
     }
 
-    .passInputContainer{
-        width: 24%;
-    }
-
-    .passBox{
+    .passBox {
         display: flex;
         flex-direction: row;
         width: 31%;
